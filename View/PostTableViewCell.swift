@@ -10,6 +10,23 @@ import UIKit
 
 class PostTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var titleOutlet: UILabel!
+    @IBOutlet weak var votesOutlet: UILabel!
+    @IBOutlet weak var commentsOutlet: UILabel!
+    @IBOutlet weak var thumbnailOutlet: UIImageView!
+    
+    var post: Post?{
+        didSet{
+            updateViews()
+        }
+    }
+    var postImage: UIImage?{
+        didSet{
+            updateViews()
+
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -19,6 +36,19 @@ class PostTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func updateViews(){
+        guard let post = post else {return}
+        titleOutlet.text = post.title
+        votesOutlet.text = "\(post.numberOfUpvotes)"
+        commentsOutlet.text = "\(post.numberOfComments)"
+        if let postImage = postImage{
+            thumbnailOutlet.image = postImage
+        }
+
+        
+        
     }
 
 }
